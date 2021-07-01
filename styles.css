@@ -152,3 +152,10 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.photographer {
+  font-family: Arial;
+  font-size: 0.75rem;
+  letter-spacing: normal;
+  color: var(--primary-color);
+}
