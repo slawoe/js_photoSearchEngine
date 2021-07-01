@@ -1,0 +1,154 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: rgb(45, 43, 43);
+  --secondary-color: white;
+  --bg-button: rgb(135, 85, 157);
+}
+
+[data-theme="dark"] {
+  --primary-color: white;
+  --secondary-color: rgb(45, 43, 43);
+  --bg-button: rgb(169, 186, 150);
+}
+
+html {
+  font-family: "Pacifico", cursive;
+}
+
+body {
+  background: var(--secondary-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  letter-spacing: 1.5px;
+}
+
+header {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 20vh;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer {
+  margin: 5rem;
+}
+
+h2 {
+  padding: 2rem;
+}
+
+span {
+  margin-left: 10px;
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+button {
+  border: none;
+  padding: 0.5rem;
+  font-size: 1rem;
+  letter-spacing: inherit;
+  font-family: inherit;
+  background: var(--bg-button);
+  color: var(--secondary-color);
+}
+
+#logo {
+  text-decoration: none;
+  color: var(--primary-color);
+}
+
+.search-form {
+  padding: 2rem;
+  display: flex;
+}
+
+.search-form input {
+  font-size: 2rem;
+  padding: 0.5rem;
+  border: 3px solid var(--bg-button);
+  border-radius: 15px 0 0 15px;
+}
+
+.search-form button {
+  border-radius: 0 15px 15px 0;
+}
+
+#more {
+  border-radius: 15px;
+  width: 10rem;
+}
+
+.theme-toggle-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.theme-toggle {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+
+.theme-toggle input {
+  display: none;
+}
+
+.slider {
+  background-color: var(--bg-button);
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+}
+
+.slider:before {
+  background-color: var(--secondary-color);
+  bottom: 4px;
+  content: "";
+  height: 26px;
+  left: 4px;
+  position: absolute;
+  transition: 0.5s;
+  width: 26px;
+}
+
+input:checked + .slider {
+  background-color: rgb(169, 186, 150);
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.slider.round {
+  border-radius: 35px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
