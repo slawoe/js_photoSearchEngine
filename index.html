@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Photon</title>
-    <link rel="stylesheet" href="./sytels.css" />
+    <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
     <header>
@@ -19,8 +19,19 @@
     </header>
     <main>
       <div class="gallery"></div>
-      <div class="more"></div>
+      <div class="more">
+        <button id="more">More</button>
+      </div>
     </main>
+    <footer>
+      <div class="theme-toggle-wrapper">
+        <label class="theme-toggle" for="checkbox">
+          <input type="checkbox" id="checkbox" />
+          <div class="slider round"></div>
+        </label>
+        <span id="mode">Dark Mode!</span>
+      </div>
+    </footer>
     <script src="./app.js"></script>
   </body>
 </html>
