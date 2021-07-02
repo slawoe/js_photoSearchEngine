@@ -1,16 +1,20 @@
 // VARIABLES
-const auth = "";
+const auth = "ADD YOUR API_KEY FOR PEXELS HERE";
 let searchValue = "";
 const currentTheme = localStorage.getItem("theme")
   ? localStorage.getItem("theme")
   : null;
+let page = 1;
+let fetchLink = "https://api.pexels.com/v1/curated?per_page=15&page=1";
+let currentSearch;
 
 // QUERY SELECTORS
-const gallery = document.querySelector(".gallery");
 const mode = document.querySelector("#mode");
+const form = document.querySelector(".search-form");
 const searchInput = document.querySelector(".search-input");
 const submitButton = document.querySelector(".submit-btn");
-const form = document.querySelector(".search-form");
+const gallery = document.querySelector(".gallery");
+const more = document.querySelector("#more");
 const toggleSwitch = document.querySelector(
   '.theme-toggle input[type="checkbox"]'
 );
@@ -19,12 +23,15 @@ const toggleSwitch = document.querySelector(
 searchInput.addEventListener("input", updateInput);
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  currentSearch = searchValue;
   searchPhotos(searchValue);
 });
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
+  currentSearch = searchValue;
   searchPhotos(searchValue);
 });
+more.addEventListener("click", loadMore);
 
 // FUNCTIONS
 
@@ -99,17 +106,28 @@ function clear() {
 // FETCHING AND GENERATING RESULTS
 
 async function getPhotos() {
-  const data = await fetchAPI(
-    `https://api.pexels.com/v1/curated?per_page=15&page=1`
-  );
+  const data = await fetchAPI(fetchLink);
   generatePictures(data);
 }
 
 async function searchPhotos(query) {
   clear();
-  const data = await fetchAPI(
-    `https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page=1`
-  );
+  searched = true;
+  fetchLink = `https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page=${page}`;
+  const data = await fetchAPI(fetchLink);
+  generatePictures(data);
+}
+
+// MORE
+
+async function loadMore() {
+  page++;
+  if (currentSearch) {
+    `https://api.pexels.com/v1/search?query=${currentSearch}+query&per_page=15&page=${page}`;
+  } else {
+    fetchLink = `https://api.pexels.com/v1/curated?per_page=15&page=${page}`;
+  }
+  const data = await fetchAPI(fetchLink);
   generatePictures(data);
 }
 
