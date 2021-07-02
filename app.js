@@ -1,5 +1,5 @@
 // VARIABLES
-const auth = "";
+const auth = "563492ad6f917000010000019f5c25647c7a443f96b32d893bc54ae2";
 let searchValue = "";
 const currentTheme = localStorage.getItem("theme")
   ? localStorage.getItem("theme")
@@ -84,6 +84,13 @@ function updateInput(e) {
   searchValue = e.target.value;
 }
 
+// CLEAR RESULTS AND SEARCHINPUT.VALUE
+
+function clear() {
+  gallery.innerHTML = "";
+  searchInput.value = "";
+}
+
 // FETCHING AND GENERATING RESULTS
 
 async function getPhotos() {
@@ -94,6 +101,7 @@ async function getPhotos() {
 }
 
 async function searchPhotos(query) {
+  clear();
   const data = await fetchAPI(
     `https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page=1`
   );
