@@ -1,14 +1,32 @@
-const auth = "INSERT YOUR API_KEY";
-const gallery = document.querySelector(".gallery");
-const mode = document.querySelector("#mode");
-const searchInput = document.querySelector(".search-input");
-const submitButton = document.querySelector(".submit-button");
-const toggleSwitch = document.querySelector(
-  '.theme-toggle input[type="checkbox"]'
-);
+// VARIABLES
+const auth = "";
+let searchValue = "";
 const currentTheme = localStorage.getItem("theme")
   ? localStorage.getItem("theme")
   : null;
+
+// QUERY SELECTORS
+const gallery = document.querySelector(".gallery");
+const mode = document.querySelector("#mode");
+const searchInput = document.querySelector(".search-input");
+const submitButton = document.querySelector(".submit-btn");
+const form = document.querySelector(".search-form");
+const toggleSwitch = document.querySelector(
+  '.theme-toggle input[type="checkbox"]'
+);
+
+// EVENT LISTENER
+searchInput.addEventListener("input", updateInput);
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  searchPhotos(searchValue);
+});
+submitButton.addEventListener("click", (e) => {
+  e.preventDefault();
+  searchPhotos(searchValue);
+});
+
+// FUNCTIONS
 
 // THEME
 if (currentTheme) {
@@ -34,25 +52,65 @@ function switchTheme(e) {
 toggleSwitch.addEventListener("change", switchTheme, false);
 
 // FETCH API
+async function fetchAPI(url) {
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+      Authorization: auth,
+    },
+  });
+  if (!response.ok) {
+    throw new Error(response);
+  }
+  const result = await response.json();
+  return result;
+}
 
-async function getPhotos() {
-  const fetchPhotos = await fetch(
-    "https://api.pexels.com/v1/curated?per_page=15&page=1",
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        Authorization: auth,
-      },
-    }
-  );
-  const data = await fetchPhotos.json();
+//HTML OUTPUT
+
+function generatePictures(data) {
   data.photos.forEach((photo) => {
     const galleryImg = document.createElement("div");
     galleryImg.classList.add("gallery-img");
-    galleryImg.innerHTML = `<img src=${photo.src.medium}></img><p class="photographer">Photographer: ${photo.photographer}</p>`;
+    galleryImg.innerHTML = `
+    <div class="info">
+      <p class="photographer">Photographer: ${photo.photographer}</p>
+      <a href="${photo.src.original}">Show full size picture</a>
+    </div>
+    <img src=${photo.src.medium}></img>`;
     gallery.appendChild(galleryImg);
   });
+}
+
+// SEARCH
+
+function updateInput(e) {
+  searchValue = e.target.value;
+}
+
+// CLEAR RESULTS AND SEARCHINPUT.VALUE
+
+function clear() {
+  gallery.innerHTML = "";
+  searchInput.value = "";
+}
+
+// FETCHING AND GENERATING RESULTS
+
+async function getPhotos() {
+  const data = await fetchAPI(
+    `https://api.pexels.com/v1/curated?per_page=15&page=1`
+  );
+  generatePictures(data);
+}
+
+async function searchPhotos(query) {
+  clear();
+  const data = await fetchAPI(
+    `https://api.pexels.com/v1/search?query=${query}+query&per_page=15&page=1`
+  );
+  generatePictures(data);
 }
 
 getPhotos();

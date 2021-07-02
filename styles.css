@@ -88,6 +88,7 @@ button {
   padding: 0.5rem;
   border: 3px solid var(--bg-button);
   border-radius: 15px 0 0 15px;
+  font-size: inherit;
 }
 
 .search-form button {
@@ -153,9 +154,16 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-.photographer {
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-family: Arial;
   font-size: 0.75rem;
   letter-spacing: normal;
   color: var(--primary-color);
+}
+
+.info a {
+  color: inherit;
 }
