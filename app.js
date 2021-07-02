@@ -1,5 +1,5 @@
 // VARIABLES
-const auth = "563492ad6f917000010000019f5c25647c7a443f96b32d893bc54ae2";
+const auth = "";
 let searchValue = "";
 const currentTheme = localStorage.getItem("theme")
   ? localStorage.getItem("theme")
@@ -73,7 +73,12 @@ function generatePictures(data) {
   data.photos.forEach((photo) => {
     const galleryImg = document.createElement("div");
     galleryImg.classList.add("gallery-img");
-    galleryImg.innerHTML = `<img src=${photo.src.medium}></img><p class="photographer">Photographer: ${photo.photographer}</p>`;
+    galleryImg.innerHTML = `
+    <div class="info">
+      <p class="photographer">Photographer: ${photo.photographer}</p>
+      <a href="${photo.src.original}">Show full size picture</a>
+    </div>
+    <img src=${photo.src.medium}></img>`;
     gallery.appendChild(galleryImg);
   });
 }
