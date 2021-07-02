@@ -78,7 +78,7 @@ function generatePictures(data) {
       <p class="photographer">Photographer: ${photo.photographer}</p>
       <a href="${photo.src.original}">Show full size picture</a>
     </div>
-    <img src=${photo.src.medium}></img>`;
+    <img src=${photo.src.large}></img>`;
     gallery.appendChild(galleryImg);
   });
 }
